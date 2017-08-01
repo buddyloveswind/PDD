@@ -56,13 +56,13 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(225, 30);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(186, 26);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
             this.toolStripMenuItem1.Text = "Open file in directory";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
@@ -71,6 +71,7 @@
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -89,24 +90,27 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.listView1);
-            this.splitContainer1.Size = new System.Drawing.Size(787, 606);
-            this.splitContainer1.SplitterDistance = 150;
+            this.splitContainer1.Size = new System.Drawing.Size(590, 492);
+            this.splitContainer1.SplitterDistance = 121;
+            this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 10;
             // 
             // progressBar1
             // 
             this.progressBar1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.progressBar1.Location = new System.Drawing.Point(12, 124);
+            this.progressBar1.Location = new System.Drawing.Point(9, 100);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(767, 23);
+            this.progressBar1.Size = new System.Drawing.Size(575, 19);
             this.progressBar1.TabIndex = 18;
             // 
             // chkboxDate
             // 
             this.chkboxDate.AutoSize = true;
-            this.chkboxDate.Location = new System.Drawing.Point(410, 52);
+            this.chkboxDate.Location = new System.Drawing.Point(308, 42);
+            this.chkboxDate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkboxDate.Name = "chkboxDate";
-            this.chkboxDate.Size = new System.Drawing.Size(123, 21);
+            this.chkboxDate.Size = new System.Drawing.Size(98, 17);
             this.chkboxDate.TabIndex = 17;
             this.chkboxDate.Text = "Check on Date";
             this.chkboxDate.UseVisualStyleBackColor = true;
@@ -114,9 +118,10 @@
             // chkboxSize
             // 
             this.chkboxSize.AutoSize = true;
-            this.chkboxSize.Location = new System.Drawing.Point(286, 52);
+            this.chkboxSize.Location = new System.Drawing.Point(214, 42);
+            this.chkboxSize.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkboxSize.Name = "chkboxSize";
-            this.chkboxSize.Size = new System.Drawing.Size(118, 21);
+            this.chkboxSize.Size = new System.Drawing.Size(93, 17);
             this.chkboxSize.TabIndex = 16;
             this.chkboxSize.Text = "Check on size";
             this.chkboxSize.UseVisualStyleBackColor = true;
@@ -124,26 +129,29 @@
             // lblCount
             // 
             this.lblCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblCount.Location = new System.Drawing.Point(579, 90);
+            this.lblCount.Location = new System.Drawing.Point(434, 73);
+            this.lblCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(200, 23);
+            this.lblCount.Size = new System.Drawing.Size(150, 19);
             this.lblCount.TabIndex = 15;
             this.lblCount.Text = "lblCount";
             this.lblCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtBoxExtensionOveride
             // 
-            this.txtBoxExtensionOveride.Location = new System.Drawing.Point(149, 52);
+            this.txtBoxExtensionOveride.Location = new System.Drawing.Point(112, 42);
+            this.txtBoxExtensionOveride.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtBoxExtensionOveride.Name = "txtBoxExtensionOveride";
-            this.txtBoxExtensionOveride.Size = new System.Drawing.Size(122, 22);
+            this.txtBoxExtensionOveride.Size = new System.Drawing.Size(92, 20);
             this.txtBoxExtensionOveride.TabIndex = 14;
             this.txtBoxExtensionOveride.Text = "*.jpg";
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(10, 84);
+            this.btnDelete.Location = new System.Drawing.Point(8, 68);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(130, 29);
+            this.btnDelete.Size = new System.Drawing.Size(98, 24);
             this.btnDelete.TabIndex = 13;
             this.btnDelete.Text = "Delete Selected";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -151,9 +159,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(8, 49);
+            this.button2.Location = new System.Drawing.Point(6, 40);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(130, 29);
+            this.button2.Size = new System.Drawing.Size(98, 24);
             this.button2.TabIndex = 12;
             this.button2.Text = "Detect";
             this.button2.UseVisualStyleBackColor = true;
@@ -162,17 +171,19 @@
             // lblPath
             // 
             this.lblPath.AutoSize = true;
-            this.lblPath.Location = new System.Drawing.Point(146, 20);
+            this.lblPath.Location = new System.Drawing.Point(110, 16);
+            this.lblPath.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPath.Name = "lblPath";
-            this.lblPath.Size = new System.Drawing.Size(51, 17);
+            this.lblPath.Size = new System.Drawing.Size(39, 13);
             this.lblPath.TabIndex = 11;
             this.lblPath.Text = "lblPath";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(8, 14);
+            this.button1.Location = new System.Drawing.Point(6, 11);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(132, 29);
+            this.button1.Size = new System.Drawing.Size(99, 24);
             this.button1.TabIndex = 10;
             this.button1.Text = "Select Directory";
             this.button1.UseVisualStyleBackColor = true;
@@ -185,19 +196,22 @@
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(0, 0);
+            this.listView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(787, 452);
+            this.listView1.Size = new System.Drawing.Size(590, 368);
             this.listView1.TabIndex = 4;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(787, 606);
+            this.ClientSize = new System.Drawing.Size(590, 492);
             this.Controls.Add(this.splitContainer1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DPP - Doublon Pictures Detector";
             this.contextMenuStrip1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
