@@ -110,6 +110,8 @@ namespace PDD
                         lvi.SubItems.Add(t.FullName);
                         lvi.SubItems.Add(t.Size.ToString());
                         lvi.SubItems.Add(t.CreationDate.ToString());
+
+
                         listView1.Items.Add(lvi);
                     }
                     else
