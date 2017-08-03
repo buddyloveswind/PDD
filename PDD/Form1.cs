@@ -117,7 +117,6 @@ namespace PDD
                         firstDoublon = true;
                     }
                     previousName = t.Name;
-
                     previousFullName = t.FullName;
                     previousFileCreationDatetime = t.CreationDate;
                     previousFileSize = t.Size;
