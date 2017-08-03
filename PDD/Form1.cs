@@ -14,6 +14,7 @@ namespace PDD
 
         string _DirectoryPath = string.Empty;
         public List<Picture> PicturesList = new List<Picture>();
+        public List<FileInfo> PicturesFileInfoList = new List<FileInfo>();
 
         public Form1()
         {
@@ -34,6 +35,7 @@ namespace PDD
             listView1.Columns.Add("CreationDate", 50);
             listView1.MultiSelect = false;
             PicturesList.Clear();
+            PicturesFileInfoList.Clear();
             btnDelete.Enabled = false;
             lblCount.Text = string.Empty;
         }
@@ -52,77 +54,75 @@ namespace PDD
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private new void Load(object sender, EventArgs e)
         {
-            InitializeListView();
-
-            if (Directory.Exists(_DirectoryPath))
+            try
             {
-                // This path is a directory
-                ProcessDirectory(_DirectoryPath);
-            }
-            else
-            {
-                //Console.WriteLine("{0} is not a valid file or directory.", _DirectoryPath);
-            }
+                Cursor.Current = Cursors.WaitCursor;
 
-            ShowDoublons();
+                InitializeListView();
+
+                if (Directory.Exists(_DirectoryPath))
+                {
+                    ProcessDirectory(_DirectoryPath);
+                }
+
+                ShowDoublons();
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
         }
+
 
         public void ShowDoublons()
         {
-            List<Picture> SortedList = PicturesList.OrderBy(o => o.Name).ToList();
-            SortedList.First();
-            var previousName = string.Empty;
-            var previousFullName = string.Empty;
-            var firstDoublon = true;
+            if (PicturesList.Count >0)
+            { 
+                List<Picture> SortedList = PicturesList.OrderBy(o => o.Name).ToList();
+                SortedList.First();
+                var previousName = string.Empty;
+                var previousFullName = string.Empty;
+                long previousFileSize = 0;
+                DateTime previousFileCreationDatetime = DateTime.MinValue;
 
-            foreach (Picture t in SortedList)
-            {
-                if (t.Name == previousName)
+                var firstDoublon = true;
+
+                foreach (Picture t in SortedList)
                 {
-                    if (!(chkboxSize.Checked) || ((chkboxSize.Checked) && ExtraCheckSucceded(previousFullName, t.FullName)))
+                    if ((t.Name == previousName)
+                        && ((!chkboxFileSize.Checked)||(chkboxFileSize.Checked &&t.Size == previousFileSize))
+                        && ((!chkboxDate.Checked) || (chkboxDate.Checked && t.CreationDate == previousFileCreationDatetime)))
                     {
                         if (firstDoublon)
                         {
                             ListViewItem lvif = new ListViewItem();
                             lvif.SubItems.Add(previousName);
                             lvif.SubItems.Add(previousFullName);
+                            lvif.SubItems.Add(previousFileSize.ToString());
+                            lvif.SubItems.Add(previousFileCreationDatetime.ToString());
                             listView1.Items.Add(lvif);
                             firstDoublon = false;
                         }
                         ListViewItem lvi = new ListViewItem();
                         lvi.SubItems.Add(t.Name);
                         lvi.SubItems.Add(t.FullName);
+                        lvi.SubItems.Add(t.Size.ToString());
+                        lvi.SubItems.Add(t.CreationDate.ToString());
                         listView1.Items.Add(lvi);
                     }
+                    else
+                    {
+                        firstDoublon = true;
+                    }
+                    previousName = t.Name;
+                    previousFullName = t.FullName;
+                    previousFileCreationDatetime = t.CreationDate;
+                    previousFileSize = t.Size;
                 }
-                else
-                {
-                    firstDoublon = true;
-                }
-                previousName = t.Name;
-                previousFullName = t.FullName;
             }
-            lblCount.Text = listView1.Items.Count.ToString() + " Doublons";
-        }
-
-        private bool ExtraCheckSucceded(string previousFullName, string fullName)
-        {
-            FileInfo previousFileInfo = new FileInfo(previousFullName);
-            FileInfo currentFileInfo = new FileInfo(fullName);
-
-            if (chkboxDate.Checked)
-            {
-                return ((previousFileInfo.Length == currentFileInfo.Length)
-                     && (previousFileInfo.CreationTimeUtc == currentFileInfo.CreationTimeUtc));
-            }
-            else
-            {
-                return (previousFileInfo.Length == currentFileInfo.Length);
-            }
-
-
+            lblCount.Text = PicturesList.Count.ToString() + " files and " + listView1.Items.Count.ToString() + " Doublons";
         }
 
         // Process all files in the directory passed in, recurse on any directories 
@@ -143,35 +143,47 @@ namespace PDD
         // Insert logic for processing found files here.
         public void ProcessFile(string path)
         {
-            //add items to ListView
-            PicturesList.Add(new Picture() { Name = path.Replace(Path.GetDirectoryName(path) + "\\", string.Empty), FullName = path });
+            //add file to filelist
+            var fileInfo = new FileInfo(path);
+            PicturesList.Add(new Picture()
+            {
+                Name = path.Replace(Path.GetDirectoryName(path) + "\\", string.Empty),
+                FullName = path,
+                CreationDate = fileInfo.LastWriteTimeUtc,
+                Size = fileInfo.Length
+            });
+            PicturesFileInfoList.Add(fileInfo);
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Delete(object sender, EventArgs e)
         {
             ListView.CheckedListViewItemCollection checkedItems = listView1.CheckedItems;
 
-            if (MessageBox.Show("Are you sure you want to delete " + checkedItems.Count.ToString() + " items ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) == DialogResult.OK)
+            if (MessageBox.Show("Are you sure you want to delete " + checkedItems.Count.ToString() + " items ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
                 progressBar1.Maximum = checkedItems.Count;
                 progressBar1.Minimum = 0;
+                progressBar1.Value = 0;
                 foreach (ListViewItem item in checkedItems)
                 {
                     File.Delete(item.SubItems[2].Text);
-                    progressBar1.Step = progressBar1.Step + 1;
+                    progressBar1.Value = progressBar1.Value + 1;
                 }
+                MessageBox.Show(checkedItems.Count.ToString() + " items deleted successfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private void listView1_DoubleClick(object sender, EventArgs e)
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ListViewItem lvItem = listView1.SelectedItems[0];
+            System.Diagnostics.Process.Start(Path.GetDirectoryName(lvItem.SubItems[2].Text));
+        }
+
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ListViewItem lvItem = listView1.SelectedItems[0];
             System.Diagnostics.Process.Start(lvItem.SubItems[2].Text);
             listView1.SelectedItems[0].Checked = !listView1.SelectedItems[0].Checked;
-        }
-
-        private void listView1_MouseEnter(object sender, EventArgs e)
-        {
         }
 
         private void listView1_MouseClick(object sender, MouseEventArgs e)
@@ -183,17 +195,6 @@ namespace PDD
                     contextMenuStrip1.Show(Cursor.Position);
                 }
             }
-        }
-
-        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
-
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            ListViewItem lvItem = listView1.SelectedItems[0];
-            System.Diagnostics.Process.Start(Path.GetDirectoryName(lvItem.SubItems[2].Text));
         }
     }
 

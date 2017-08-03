@@ -6,7 +6,7 @@ namespace PDD
     {
         public string Name { get; set; }
         public string FullName { get; set; }
-        public string Size { get; set; }
+        public long Size { get; set; }
         public DateTime CreationDate { get; set; }
 
     }
